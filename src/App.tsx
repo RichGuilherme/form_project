@@ -1,5 +1,6 @@
 import "./App.css"
-import { Descrition } from "./components/descrition"
+import { DescriptionProductService } from "./components/descriptionProductService"
+
 import { MoreInfor } from "./components/moreInfor"
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
   return (
     <main className="flex flex-col gap-11 p-4">
       <MoreInfor />
-      <Descrition />
+      <DescriptionProductService />
     </main>
   )
 }
