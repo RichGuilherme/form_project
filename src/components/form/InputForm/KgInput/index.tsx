@@ -14,8 +14,8 @@ export const KgInput = ({ name, textLabel, control }: InputsProps) => {
   };
 
   return (
-    <div className="mt-3">
-      <Label htmlFor={name} className="font-thin text-gray-500 text-base">
+    <div className="mt-3 group">
+      <Label htmlFor={name} className="font-thin text-gray-500 text-base group-focus-within:text-orange-500 ">
         {textLabel}
       </Label>
 
@@ -27,7 +27,7 @@ export const KgInput = ({ name, textLabel, control }: InputsProps) => {
             <>
               <NumericFormat
                 {...field}
-                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full"
+                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full peer"
                 suffix=" kg"
                 decimalSeparator=","
                 decimalScale={2}

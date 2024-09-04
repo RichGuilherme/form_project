@@ -78,6 +78,6 @@
 
 @layer components {
   .inputForm {
-    @apply flex flex-row gap-2 items-center border-b-[1px] border-gray-500 hover:border-gray-800 hover:border-b-2 text-xl text-gray-800 font-thin w-full
+    @apply flex flex-row gap-2 items-center border-b-[1px] border-gray-500 hover:border-gray-800 hover:border-b-2 text-xl text-gray-800 font-thin w-full group-focus-within:border-orange-500
   }
 }

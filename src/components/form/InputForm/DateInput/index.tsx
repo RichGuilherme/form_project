@@ -14,7 +14,7 @@ import { format } from "date-fns";
 
 export const DateInput = ({ name, control, textLabel }: InputsProps) => {
   return (
-    <div className="mt-3">
+    <div className="mt-3 group">
       <div className="inputForm">
         <Controller
           name={name}
