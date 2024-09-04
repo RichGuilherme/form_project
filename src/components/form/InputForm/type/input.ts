@@ -5,7 +5,6 @@ export interface InputsProps {
     name: string;
     textLabel: string;
     control: any;
-    style?: string
 }
 
 export interface FieldParams {
@@ -14,13 +13,15 @@ export interface FieldParams {
     value: any;
     disabled?: boolean | undefined;
     name?: string;
+    style?: string;
 }
 
 export type typeInput = "money" | "uni" | "kg" | "text"
 
 export interface InputFormProps {
     type: typeInput | string
-    textLabel: string,
-    control: any;
+    textLabel: string
+    control: any
     name: string
+    style?: string
 }

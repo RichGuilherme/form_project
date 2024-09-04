@@ -5,7 +5,7 @@ import { InputFormProps } from "./type/input";
 import { UniInput } from "./UnitInput";
 
 
-const InputForm = ({ type, ...props }: InputFormProps) => {
+const InputForm: React.FC<InputFormProps> = ({ type, ...props }) => {
   switch (type) {
     case "money":
       return <MoneyInput {...props} />;
