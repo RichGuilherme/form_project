@@ -1,3 +1,4 @@
+import { DateInput } from "./DateInput";
 import { KgInput } from "./KgInput";
 import { MoneyInput } from "./MoneyInput";
 import { TextInput } from "./TextInput";
@@ -15,6 +16,8 @@ const InputForm: React.FC<InputFormProps> = ({ type, ...props }) => {
       return <UniInput {...props} />;
     case "text":
       return <TextInput {...props} />;
+    case "date":
+      return <DateInput {...props} />;
     default:
       return null;
   }

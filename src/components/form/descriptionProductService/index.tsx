@@ -16,7 +16,9 @@ const schema = z.object({
   weight: z.string(),
   volume: z.string(),
   value: z.string(),
-  textDescription: z.string()
+  textDescription: z.string(),
+  dateMin: z.date(),
+  dateMax: z.date()
 });
 
 type FormData = z.infer<typeof schema>;
@@ -37,7 +39,9 @@ export const DescriptionProductService = () => {
       volume: "0",
       weight: "0",
       value: value,
-      textDescription: ""
+      textDescription: "",
+      dateMin: new Date(),
+      dateMax: new Date(),
     },
   });
 
@@ -74,11 +78,12 @@ export const DescriptionProductService = () => {
 
 
   const onSubmit: SubmitHandler<FormData> = (dataProps) => {
-    const fomattedData = formatData(dataProps);
-    useProductService.getState().setStatus(fomattedData);
+    const formattedData = formatData(dataProps);
+    useProductService.getState().setStatus(formattedData);
 
+    console.log(formattedData);
     addData({
-      ...fomattedData,
+      ...formattedData,
       id: Date.now().toString(),
     });
 
@@ -123,6 +128,18 @@ export const DescriptionProductService = () => {
       name: "textDescription",
       textLabel: "Descrição",
       style: "col-span-2"
+    },
+    {
+      index: 7,
+      type: "date",
+      name: "dateMin",
+      textLabel: "Prazo mínimo",
+    },
+    {
+      index: 8,
+      type: "date",
+      name: "dateMax",
+      textLabel: "Prazo máximo",
     }
   ], []);
 

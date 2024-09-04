@@ -8,6 +8,8 @@ interface Product {
   weight: string;
   value: string;
   textDescription: string;
+  dateMin: string;
+  dateMax: string;
 }
 
 interface TableState {

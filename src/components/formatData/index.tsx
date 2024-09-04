@@ -1,3 +1,5 @@
+import { format } from "date-fns/format";
+
 interface FormDataProps {
   quantity: string,
   valueUnit: string,
@@ -5,6 +7,8 @@ interface FormDataProps {
   volume: string,
   value: string,
   textDescription: string
+  dateMin: Date
+  dateMax: Date
 }
 
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
@@ -23,6 +27,10 @@ export const formatData = (data: FormDataProps) => {
   const volumeClean = data.volume.replace(" uni", "").trim();
   const valueClean = data.value.replace("R$ ", "");
 
+  const formatDate = (date: Date) => {
+    return format(date, "PPP");
+  };
+
 
   return {
     quantity: quantityClean,
@@ -31,5 +39,7 @@ export const formatData = (data: FormDataProps) => {
     volume: `${volumeClean} uni`,
     value: `${moneyFormatter.format(parseFloat(valueClean))}`,
     textDescription: data.textDescription,
+    dateMin: formatDate(data.dateMin),
+    dateMax: formatDate(data.dateMax)
   };
 };
