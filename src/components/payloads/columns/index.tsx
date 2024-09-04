@@ -62,7 +62,7 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Prazo máximo",
   },
   {
-    accessorKey: "description",
+    accessorKey: "textDescription",
     header: "Descrição",
   }
 ];

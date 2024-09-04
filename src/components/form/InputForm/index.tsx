@@ -1,19 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { KgInput } from "./KgInput";
 import { MoneyInput } from "./MoneyInput";
+import { TextInput } from "./TextInput";
+import { InputFormProps } from "./type/input";
 import { UniInput } from "./UnitInput";
 
-type typeInput = "money" | "uni" | "kg"
 
-interface InputFormProps {
-  type: typeInput | string
-  textLabel: string,
-  control: any;
-  name: string
-}
-
-export const InputForm = ({ type, ...props }: InputFormProps) => {
+const InputForm = ({ type, ...props }: InputFormProps) => {
   switch (type) {
     case "money":
       return <MoneyInput {...props} />;
@@ -21,7 +13,11 @@ export const InputForm = ({ type, ...props }: InputFormProps) => {
       return <KgInput {...props} />;
     case "uni":
       return <UniInput {...props} />;
+    case "text":
+      return <TextInput {...props} />;
     default:
       return null;
   }
 };
+
+export default InputForm;

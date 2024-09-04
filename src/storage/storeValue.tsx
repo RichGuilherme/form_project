@@ -7,6 +7,7 @@ interface Product {
   volume: string;
   weight: string;
   value: string;
+  textDescription: string;
 }
 
 interface TableState {
@@ -36,13 +37,11 @@ const calculateTotals = (data: Product[], moneyValues: TableState["moneyValues"]
   let totalVolume = 0;
   let totalNota = 0;
 
-  console.log(data);
 
   data.forEach((product) => {
     const weight = parseFloat(product.weight.replace(",", "."));
     const volume = parseFloat(product.volume);
     const valueString = product.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
-    console.log(valueString);
     const value = parseFloat(valueString);
 
 
@@ -73,8 +72,6 @@ const calculateTotals = (data: Product[], moneyValues: TableState["moneyValues"]
 
     totalNota = validFrete + totalProductService - validDescont;
   }
-
-
 
   return {
     totalProductService: totalProductService.toFixed(2),

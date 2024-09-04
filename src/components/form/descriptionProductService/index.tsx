@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TitleForm } from "../../titleForm";
-import { InputForm } from "../InputForm";
+import { TitleForm } from "../../titleBox";
+import InputForm from "../InputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../../ui/button";
@@ -16,6 +16,7 @@ const schema = z.object({
   weight: z.string(),
   volume: z.string(),
   value: z.string(),
+  textDescription: z.string()
 });
 
 type FormData = z.infer<typeof schema>;
@@ -36,6 +37,7 @@ export const DescriptionProductService = () => {
       volume: "0",
       weight: "0",
       value: value,
+      textDescription: ""
     },
   });
 
@@ -114,6 +116,13 @@ export const DescriptionProductService = () => {
       type: "money",
       name: "value",
       textLabel: "Valor"
+    },
+    {
+      index: 6,
+      type: "text",
+      name: "textDescription",
+      textLabel: "Descrição",
+      style: "col-span-2"
     }
   ], []);
 
@@ -122,21 +131,23 @@ export const DescriptionProductService = () => {
     <section>
       <TitleForm title="Descrição do Produto/Serviço" />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-6 items-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
         {inputFormValue.map(value => (
           <InputForm
             key={value.index}
             type={value.type}
             textLabel={value.textLabel}
             control={control}
-            name={value.name} />
+            name={value.name}
+            style={value.style} />
         )
         )}
-
         <Button
           className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full bg-orange-400"
-          type="submit">
-          <Plus />
+          type="submit"
+          size="icon"
+          variant="outline">
+          <Plus className="text-white" />
         </Button>
       </form>
     </section>

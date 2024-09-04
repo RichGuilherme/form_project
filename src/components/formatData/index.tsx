@@ -4,6 +4,7 @@ interface FormDataProps {
   weight: string,
   volume: string,
   value: string,
+  textDescription: string
 }
 
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
@@ -29,5 +30,6 @@ export const formatData = (data: FormDataProps) => {
     weight: `${weightClean} kg`,
     volume: `${volumeClean} uni`,
     value: `${moneyFormatter.format(parseFloat(valueClean))}`,
+    textDescription: data.textDescription,
   };
 };
