@@ -23,7 +23,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export const DescriptionProductService = () => {
+export const CreateProductService = () => {
   const {
     status: { value },
     setValueTotal
