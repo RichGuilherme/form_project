@@ -160,11 +160,11 @@ export const DescriptionProductService = () => {
         )
         )}
         <Button
-          className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full bg-orange-400"
+          className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"
           type="submit"
           size="icon"
           variant="outline">
-          <Plus className="text-white" />
+          <Plus className="text-white group-hover:text-black" />
         </Button>
       </form>
     </section>

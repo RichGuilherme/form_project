@@ -5,6 +5,7 @@ export interface InputsProps {
     name: string;
     textLabel: string;
     control: any;
+    style?: string
 }
 
 export interface FieldParams {

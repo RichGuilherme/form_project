@@ -37,6 +37,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -69,7 +70,14 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .inputForm {
+    @apply flex flex-row gap-2 items-center border-b-[1px] border-gray-500 hover:border-gray-800 hover:border-b-2 text-xl text-gray-800 font-thin w-full
   }
 }
