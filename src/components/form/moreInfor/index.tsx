@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { InputForm } from "../InputForm";
-import { TitleForm } from "../../titleForm";
+import InputForm from "../InputForm";
+import { TitleForm } from "../../titleBox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useStoreValue from "@/storage/storeValue";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 const schema = z.object({
   descont: z.string(),
@@ -28,17 +28,20 @@ export const MoreInfor = () => {
   const watchFrete = watch("frete");
   const watchDescont = watch("descont");
 
+  const prevFreteRef = useRef<string | null>(null);
+  const prevDescontRef = useRef<string | null>(null);
+
   useEffect(() => {
-    if (watchFrete !== "0,00" && watchFrete !== "") {
+    if (watchFrete !== prevFreteRef.current && watchFrete !== "0,00" && watchFrete !== "") {
+      prevFreteRef.current = watchFrete;
       setMoneyValue("frete", watchFrete);
     }
 
-    if (watchDescont !== "0,00" && watchDescont !== "") {
+    if (watchDescont !== prevDescontRef.current && watchDescont !== "0,00" && watchDescont !== "") {
+      prevDescontRef.current = watchDescont;
       setMoneyValue("descont", watchDescont);
     }
-
   }, [watchFrete, watchDescont, setMoneyValue]);
-
 
   useEffect(() => {
     Object.keys(moneyValues).forEach((key) => {
@@ -84,13 +87,27 @@ export const MoreInfor = () => {
       name: "unit",
       textLabel: "Volume total",
     },
+    {
+      index: 7,
+      type: "text",
+      name: "reference",
+      textLabel: "Pedido de referência",
+      style: "col-span-2 w-[70%] relative",
+    },
+    {
+      index: 8,
+      type: "text",
+      name: "obs",
+      textLabel: "Obs",
+      style: "col-span-2 w-[85%] relative right-[128px]",
+    },
   ], []);
 
   return (
     <section>
       <TitleForm title="Mais informações" />
 
-      <form className="flex flex-row gap-6">
+      <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
         {inputFormValue.map((value) => (
           <InputForm
             key={value.index}
@@ -98,6 +115,7 @@ export const MoreInfor = () => {
             textLabel={value.textLabel}
             control={control}
             name={value.name}
+            style={value.style}
           />
         ))}
       </form>
