@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TitleForm } from "../../titleBox";
+import { TitleBox } from "../../titleBox";
 import InputForm from "../InputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -129,7 +129,7 @@ export const DescriptionProductService = () => {
 
   return (
     <section>
-      <TitleForm title="Descrição do Produto/Serviço" />
+      <TitleBox title="Descrição do Produto/Serviço" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
         {inputFormValue.map(value => (

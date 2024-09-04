@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import InputForm from "../InputForm";
-import { TitleForm } from "../../titleBox";
+import { TitleBox } from "../../titleBox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useStoreValue from "@/storage/storeValue";
@@ -105,7 +105,7 @@ export const MoreInfor = () => {
 
   return (
     <section>
-      <TitleForm title="Mais informações" />
+      <TitleBox title="Mais informações" />
 
       <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
         {inputFormValue.map((value) => (
