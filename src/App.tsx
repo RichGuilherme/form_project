@@ -1,16 +1,16 @@
-import "./App.css"
-import { DescriptionProductService } from "./components/descriptionProductService"
+import "./App.css";
+import { FormComponents } from "./components/form";
+import ComponentTable from "./components/payloads";
 
-import { MoreInfor } from "./components/moreInfor"
 
 function App() {
 
   return (
     <main className="flex flex-col gap-11 p-4">
-      <MoreInfor />
-      <DescriptionProductService />
+      <FormComponents />
+      <ComponentTable />
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
