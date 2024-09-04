@@ -26,16 +26,16 @@ export const DateInput = ({ name, control, textLabel }: InputsProps) => {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-[240px] pl-3 text-left font-normal border-none h-[28px]",
+                      "w-[260px] text-left font-normal border-none h-[28px] text-lg px-0 ",
                       !field.value && "text-muted-foreground"
                     )}
                   >
                     {field.value ? (
                       format(field.value, "PPP")
                     ) : (
-                      <span>{textLabel}</span>
+                      <span className="text-xl">{textLabel}</span>
                     )}
-                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    <CalendarIcon className="h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
 
