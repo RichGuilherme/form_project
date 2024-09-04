@@ -29,13 +29,15 @@ export const MoreInfor = () => {
   const watchDescont = watch("descont");
 
   useEffect(() => {
-    if (watchFrete !== "0,00") {
+    if (watchFrete !== "0,00" && watchFrete !== "") {
       setMoneyValue("frete", watchFrete);
     }
-    if (watchDescont !== "0,00") {
+
+    if (watchDescont !== "0,00" && watchDescont !== "") {
       setMoneyValue("descont", watchDescont);
     }
-  }, [setMoneyValue, moneyValues.frete, moneyValues.descont, watchFrete, watchDescont]);
+
+  }, [watchFrete, watchDescont, setMoneyValue]);
 
 
   useEffect(() => {
