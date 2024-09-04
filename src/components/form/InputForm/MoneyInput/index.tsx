@@ -1,24 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NumericFormat } from "react-number-format";
 
-import { Controller, Noop } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Label } from "@/components/ui/label";
+import { FieldParams, InputsProps } from "../type/input";
 
-interface MoneyInputProps {
-  name: string;
-  textLabel: string;
-  control: any;
-}
 
-interface FieldParams {
-  onChange: any;
-  onBlur?: Noop;
-  value: any;
-  disabled?: boolean | undefined;
-  name?: string;
-}
-
-export const MoneyInput = ({ name, textLabel, control }: MoneyInputProps) => {
+export const MoneyInput = ({ name, textLabel, control }: InputsProps) => {
   const handleBlur = (field: FieldParams) => () => {
     if (field.value === "" || field.value === "0,00") {
       field.onChange("0,00");
@@ -41,7 +28,7 @@ export const MoneyInput = ({ name, textLabel, control }: MoneyInputProps) => {
                 {...field}
                 thousandSeparator="."
                 decimalSeparator=","
-                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl text-gray-000 font-thin w-full"
+                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full"
                 prefix="R$ "
                 decimalScale={2}
                 fixedDecimalScale={true}

@@ -1,24 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NumericFormat } from "react-number-format";
 
-import { Control, Controller, FieldValues, Noop } from "react-hook-form";
+import { Controller, } from "react-hook-form";
 import { Label } from "@/components/ui/label";
+import { FieldParams, InputsProps } from "../type/input";
 
-interface KgInputProps {
-  name: string;
-  textLabel: string;
-  control: Control<FieldValues>;
-}
 
-interface FieldParams {
-  onChange: any;
-  onBlur?: Noop;
-  value: any;
-  disabled?: boolean | undefined;
-  name?: string;
-}
-
-export const KgInput = ({ name, textLabel, control }: KgInputProps) => {
+export const KgInput = ({ name, textLabel, control }: InputsProps) => {
 
   const handleBlur = (field: FieldParams) => () => {
     if (field.value === "" || field.value === "0,00 kg") {
@@ -40,7 +27,7 @@ export const KgInput = ({ name, textLabel, control }: KgInputProps) => {
             <>
               <NumericFormat
                 {...field}
-                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl text-gray-000 font-thin w-full"
+                className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full"
                 suffix=" kg"
                 decimalSeparator=","
                 decimalScale={2}
