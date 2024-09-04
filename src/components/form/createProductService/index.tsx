@@ -81,7 +81,6 @@ export const CreateProductService = () => {
     const formattedData = formatData(dataProps);
     useProductService.getState().setStatus(formattedData);
 
-    console.log(formattedData);
     addData({
       ...formattedData,
       id: Date.now().toString(),

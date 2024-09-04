@@ -20,16 +20,16 @@ const moneyFormatter = Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 2,
 });
 
-export const formatData = (data: FormDataProps) => {
-  const quantityClean = data.quantity.replace(" uni", "").trim();
-  const valueUnitClean = data.valueUnit.replace("R$ ", "");
-  const weightClean = data.weight.replace(" kg", "").trim();
-  const volumeClean = data.volume.replace(" uni", "").trim();
-  const valueClean = data.value.replace("R$ ", "");
+const formatDate = (date: Date) => {
+  return format(date, "PPP");
+};
 
-  const formatDate = (date: Date) => {
-    return format(date, "PPP");
-  };
+export const formatData = (data: FormDataProps) => {
+  const quantityClean = data.quantity.replace("uni", "").trim();
+  const valueUnitClean = data.valueUnit.replace("R$", "");
+  const weightClean = data.weight.replace("kg", "").trim();
+  const volumeClean = data.volume.replace("uni", "").trim();
+  const valueClean = data.value.replace("R$", "");
 
 
   return {
