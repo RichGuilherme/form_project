@@ -1,6 +1,7 @@
+import useCalculateTotals from "@/hook/calculateTotals";
 import { create } from "zustand";
 
-interface Product {
+export interface Product {
   id: string;
   quantity: string;
   valueUnit: string;
@@ -12,7 +13,7 @@ interface Product {
   dateMax?: string;
 }
 
-interface TableState {
+export interface TableState {
   data: Product[];
 
   moneyValues: {
@@ -33,55 +34,6 @@ interface TableActions {
 
 type TableStore = TableState & TableActions;
 
-const calculateTotals = (data: Product[], moneyValues: TableState["moneyValues"]) => {
-  let totalProductService = 0;
-  let totalKg = 0;
-  let totalVolume = 0;
-  let totalNota = 0;
-
-
-  data.forEach((product) => {
-    const weight = parseFloat(product.weight.replace(",", "."));
-    const volume = parseFloat(product.volume);
-    const valueString = product.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
-    const value = parseFloat(valueString);
-
-
-    if (!isNaN(value)) {
-      totalProductService += value;
-    }
-
-    if (!isNaN(weight)) {
-      totalKg += weight;
-    }
-
-    if (!isNaN(volume)) {
-      totalVolume += volume;
-    }
-  });
-
-
-
-  const frete = parseFloat(moneyValues.frete.replace("R$", "").replace(/\./g, "").replace(",", ".").trim());
-  const descont = parseFloat(moneyValues.descont.replace("R$", "").replace(/\./g, "").replace(",", ".").trim());
-
-  const validFrete = isNaN(frete) ? 0 : frete;
-  const validDescont = isNaN(descont) ? 0 : descont;
-
-  if (validDescont > totalProductService) {
-    totalNota = 0;
-  } else {
-
-    totalNota = validFrete + totalProductService - validDescont;
-  }
-
-  return {
-    totalProductService: totalProductService.toFixed(2),
-    totalNota: totalNota.toFixed(2),
-    kg: totalKg.toFixed(2),
-    unit: totalVolume.toFixed(0),
-  };
-};
 
 const useStoreValue = create<TableStore>((set) => ({
   data: [],
@@ -101,7 +53,7 @@ const useStoreValue = create<TableStore>((set) => ({
         [name]: value,
       };
 
-      const updatedTotals = calculateTotals(state.data, updatedMoneyValues);
+      const updatedTotals = useCalculateTotals(state.data, updatedMoneyValues);
 
       return {
         moneyValues: {
@@ -114,7 +66,7 @@ const useStoreValue = create<TableStore>((set) => ({
   addData: (newData) =>
     set((state) => {
       const updatedData = [...state.data, newData];
-      const updatedTotals = calculateTotals(updatedData, state.moneyValues);
+      const updatedTotals = useCalculateTotals(updatedData, state.moneyValues);
 
       return {
         data: updatedData,
@@ -128,7 +80,7 @@ const useStoreValue = create<TableStore>((set) => ({
   removeData: (id) =>
     set((state) => {
       const updatedData = state.data.filter((item) => item.id !== id);
-      const updatedTotals = calculateTotals(updatedData, state.moneyValues);
+      const updatedTotals = useCalculateTotals(updatedData, state.moneyValues);
 
       return {
         data: updatedData,
