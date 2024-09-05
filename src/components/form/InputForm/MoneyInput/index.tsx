@@ -14,7 +14,7 @@ export const MoneyInput = ({ name, textLabel, control }: InputsProps) => {
 
   return (
     <div className="mt-3 group">
-      <Label htmlFor={name} className="font-thin text-gray-500 text-base group-focus-within:text-orange-500 ">
+      <Label htmlFor={name} className="font-thin text-gray-500 text-base whitespace-nowrap group-focus-within:text-orange-500 ">
         {textLabel}
       </Label>
 
