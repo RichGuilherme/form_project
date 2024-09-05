@@ -34,7 +34,6 @@ export const formatData = (data: FormDataProps) => {
   const volumeClean = data.volume.replace("uni", "").trim();
   const valueClean = data.value.replace("R$", "");
 
-  console.log(data);
 
   return {
     quantity: quantityClean,
