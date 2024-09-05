@@ -4,11 +4,12 @@ import InputForm from "../InputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../../ui/button";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import useProductService from "@/storage/productService";
 import { Plus } from "lucide-react";
 import { formatData } from "../../formatData";
 import useStoreValue from "@/storage/storeValue";
+import { v4 as uuidV4 } from "uuid";
 
 const schema = z.object({
   quantity: z.string(),
@@ -22,6 +23,58 @@ const schema = z.object({
 });
 
 type FormData = z.infer<typeof schema>;
+
+const inputFormValue = [
+  {
+    index: uuidV4(),
+    type: "uni",
+    name: "quantity",
+    textLabel: "Quantidade"
+  },
+  {
+    index: uuidV4(),
+    type: "money",
+    name: "valueUnit",
+    textLabel: "Valor unitário"
+  },
+  {
+    index: uuidV4(),
+    type: "kg",
+    name: "weight",
+    textLabel: "Peso"
+  },
+  {
+    index: uuidV4(),
+    type: "uni",
+    name: "volume",
+    textLabel: "Volume"
+  },
+  {
+    index: uuidV4(),
+    type: "money",
+    name: "value",
+    textLabel: "Valor"
+  },
+  {
+    index: uuidV4(),
+    type: "text",
+    name: "textDescription",
+    textLabel: "Descrição",
+    style: "col-span-2"
+  },
+  {
+    index: uuidV4(),
+    type: "date",
+    name: "dateMin",
+    textLabel: "Prazo mínimo",
+  },
+  {
+    index: uuidV4(),
+    type: "date",
+    name: "dateMax",
+    textLabel: "Prazo máximo",
+  }
+];
 
 export const CreateProductService = () => {
   const {
@@ -47,6 +100,8 @@ export const CreateProductService = () => {
 
   const watchValueUnit = watch("valueUnit");
   const watchQuantity = watch("quantity");
+
+
 
   useEffect(() => {
     const quantityStr = watchQuantity.replace(" uni", "").trim();
@@ -76,71 +131,26 @@ export const CreateProductService = () => {
     setValue("value", value);
   }, [setValue, value]);
 
-
   const onSubmit: SubmitHandler<FormData> = (dataProps) => {
     const formattedData = formatData(dataProps);
     useProductService.getState().setStatus(formattedData);
 
     addData({
       ...formattedData,
-      id: Date.now().toString(),
+      id: uuidV4(),
     });
 
-    reset();
+    reset({
+      quantity: "0",
+      valueUnit: "0.00",
+      weight: "0",
+      volume: "0",
+      value: value,
+      textDescription: "",
+      dateMin: undefined,
+      dateMax: undefined,
+    });
   };
-
-
-  const inputFormValue = useMemo(() => [
-    {
-      index: 1,
-      type: "uni",
-      name: "quantity",
-      textLabel: "Quantidade"
-    },
-    {
-      index: 2,
-      type: "money",
-      name: "valueUnit",
-      textLabel: "Valor unitário"
-    },
-    {
-      index: 3,
-      type: "kg",
-      name: "weight",
-      textLabel: "Peso"
-    },
-    {
-      index: 4,
-      type: "uni",
-      name: "volume",
-      textLabel: "Volume"
-    },
-    {
-      index: 5,
-      type: "money",
-      name: "value",
-      textLabel: "Valor"
-    },
-    {
-      index: 6,
-      type: "text",
-      name: "textDescription",
-      textLabel: "Descrição",
-      style: "col-span-2"
-    },
-    {
-      index: 7,
-      type: "date",
-      name: "dateMin",
-      textLabel: "Prazo mínimo",
-    },
-    {
-      index: 8,
-      type: "date",
-      name: "dateMax",
-      textLabel: "Prazo máximo",
-    }
-  ], []);
 
 
   return (
@@ -148,15 +158,18 @@ export const CreateProductService = () => {
       <TitleBox title="Descrição do Produto/Serviço" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
-        {inputFormValue.map(value => (
-          <InputForm
-            key={value.index}
-            type={value.type}
-            textLabel={value.textLabel}
-            control={control}
-            name={value.name}
-            style={value.style} />
-        )
+        {inputFormValue.map(value => {
+          return (
+            <InputForm
+              key={value.index}
+              type={value.type}
+              textLabel={value.textLabel}
+              control={control}
+              name={value.name}
+              style={value.style} />
+          );
+        }
+
         )}
         <Button
           className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"

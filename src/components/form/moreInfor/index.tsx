@@ -4,7 +4,8 @@ import { TitleBox } from "../../titleBox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useStoreValue from "@/storage/storeValue";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect } from "react";
+import { v4 as uuaiV4 } from "uuid";
 
 const schema = z.object({
   descont: z.string(),
@@ -17,6 +18,59 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const inputFormValue = [
+  {
+    index: uuaiV4(),
+    type: "money",
+    name: "frete",
+    textLabel: "Valor do frete",
+  },
+  {
+    index: uuaiV4(),
+    type: "money",
+    name: "descont",
+    textLabel: "Desconto",
+  },
+  {
+    index: uuaiV4(),
+    type: "money",
+    name: "totalProductService",
+    textLabel: "Total dos Produtos/Serviços",
+  },
+  {
+    index: uuaiV4(),
+    type: "money",
+    name: "totalNota",
+    textLabel: "Total da Nota",
+  },
+  {
+    index: uuaiV4(),
+    type: "kg",
+    name: "kg",
+    textLabel: "Peso total",
+  },
+  {
+    index: uuaiV4(),
+    type: "uni",
+    name: "unit",
+    textLabel: "Volume total",
+  },
+  {
+    index: uuaiV4(),
+    type: "text",
+    name: "reference",
+    textLabel: "Pedido de referência",
+    style: "col-span-2 w-[70%] relative",
+  },
+  {
+    index: uuaiV4(),
+    type: "text",
+    name: "obs",
+    textLabel: "Obs",
+    style: "col-span-2 w-[85%] relative right-[128px]",
+  },
+];
+
 export const MoreInfor = () => {
   const { moneyValues, setMoneyValue } = useStoreValue();
 
@@ -28,20 +82,16 @@ export const MoreInfor = () => {
   const watchFrete = watch("frete");
   const watchDescont = watch("descont");
 
-  const prevFreteRef = useRef<string | null>(null);
-  const prevDescontRef = useRef<string | null>(null);
+  const updateMoneyValue = useCallback((field: keyof FormData, value: string) => {
+    if (value !== "0,00" && value !== "") {
+      setMoneyValue(field, value);
+    }
+  }, [setMoneyValue]);
 
   useEffect(() => {
-    if (watchFrete !== prevFreteRef.current && watchFrete !== "0,00" && watchFrete !== "") {
-      prevFreteRef.current = watchFrete;
-      setMoneyValue("frete", watchFrete);
-    }
-
-    if (watchDescont !== prevDescontRef.current && watchDescont !== "0,00" && watchDescont !== "") {
-      prevDescontRef.current = watchDescont;
-      setMoneyValue("descont", watchDescont);
-    }
-  }, [watchFrete, watchDescont, setMoneyValue]);
+    updateMoneyValue("frete", watchFrete);
+    updateMoneyValue("descont", watchDescont);
+  }, [watchFrete, watchDescont, updateMoneyValue]);
 
   useEffect(() => {
     Object.keys(moneyValues).forEach((key) => {
@@ -50,58 +100,6 @@ export const MoreInfor = () => {
   }, [moneyValues, setValue]);
 
 
-  const inputFormValue = useMemo(() => [
-    {
-      index: 1,
-      type: "money",
-      name: "frete",
-      textLabel: "Valor do frete",
-    },
-    {
-      index: 2,
-      type: "money",
-      name: "descont",
-      textLabel: "Desconto",
-    },
-    {
-      index: 3,
-      type: "money",
-      name: "totalProductService",
-      textLabel: "Total dos Produtos/Serviços",
-    },
-    {
-      index: 4,
-      type: "money",
-      name: "totalNota",
-      textLabel: "Total da Nota",
-    },
-    {
-      index: 5,
-      type: "kg",
-      name: "kg",
-      textLabel: "Peso total",
-    },
-    {
-      index: 6,
-      type: "uni",
-      name: "unit",
-      textLabel: "Volume total",
-    },
-    {
-      index: 7,
-      type: "text",
-      name: "reference",
-      textLabel: "Pedido de referência",
-      style: "col-span-2 w-[70%] relative",
-    },
-    {
-      index: 8,
-      type: "text",
-      name: "obs",
-      textLabel: "Obs",
-      style: "col-span-2 w-[85%] relative right-[128px]",
-    },
-  ], []);
 
   return (
     <section>
