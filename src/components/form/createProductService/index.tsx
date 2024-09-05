@@ -82,7 +82,7 @@ export const CreateProductService = () => {
     setValueTotal
   } = useProductService();
 
-  const { addData } = useStoreValue();
+  const addData = useStoreValue(state => state.addData);
 
   const { control, handleSubmit, watch, setValue, reset } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -100,7 +100,6 @@ export const CreateProductService = () => {
 
   const watchValueUnit = watch("valueUnit");
   const watchQuantity = watch("quantity");
-
 
 
   useEffect(() => {
@@ -125,7 +124,6 @@ export const CreateProductService = () => {
     }
 
   }, [setValueTotal, watchQuantity, watchValueUnit]);
-
 
   useEffect(() => {
     setValue("value", value);

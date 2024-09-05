@@ -72,7 +72,10 @@ const inputFormValue = [
 ];
 
 export const MoreInfor = () => {
-  const { moneyValues, setMoneyValue } = useStoreValue();
+  const { moneyValues, setMoneyValue } = useStoreValue(state => ({
+    moneyValues: state.moneyValues,
+    setMoneyValue: state.setMoneyValue,
+  }));
 
   const { control, setValue, watch } = useForm<FormData>({
     resolver: zodResolver(schema),

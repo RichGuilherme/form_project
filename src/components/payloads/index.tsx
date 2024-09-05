@@ -5,7 +5,7 @@ import useStoreValue from "@/storage/storeValue";
 
 
 export default function ComponentTable() {
-  const { data } = useStoreValue();
+  const data = useStoreValue(state => state.data);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

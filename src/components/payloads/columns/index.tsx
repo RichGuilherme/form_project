@@ -21,7 +21,7 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Ações",
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { removeData } = useStoreValue();
+      const removeData = useStoreValue(state => state.removeData);
       const handleRemove = () => {
         removeData(row.original.id);
       };
