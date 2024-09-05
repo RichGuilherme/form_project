@@ -7,9 +7,9 @@ interface Product {
   volume: string;
   weight: string;
   value: string;
-  textDescription: string;
-  dateMin: string;
-  dateMax: string;
+  textDescription?: string;
+  dateMin?: string;
+  dateMax?: string;
 }
 
 interface TableState {

@@ -26,7 +26,7 @@ export const DateInput = ({ name, control, textLabel }: InputsProps) => {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-[260px] text-left font-normal border-none h-[28px] text-lg px-0 ",
+                      "w-[260px] text-left font-normal border-none h-[28px] text-lg p-1 justify-start gap-8",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -35,15 +35,15 @@ export const DateInput = ({ name, control, textLabel }: InputsProps) => {
                     ) : (
                       <span className="text-xl">{textLabel}</span>
                     )}
-                    <CalendarIcon className="h-4 w-4 opacity-50" />
+                    <CalendarIcon className={`h-4 w-4 opacity-50 ${field.value ? "hidden" : "block"}`} />
                   </Button>
                 </PopoverTrigger>
 
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
+                    selected={field.value || ""}
+                    onSelect={field.onChange || ""}
                     initialFocus
                   />
                 </PopoverContent>

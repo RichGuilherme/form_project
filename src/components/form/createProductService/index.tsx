@@ -17,8 +17,8 @@ const schema = z.object({
   volume: z.string(),
   value: z.string(),
   textDescription: z.string(),
-  dateMin: z.date(),
-  dateMax: z.date()
+  dateMin: z.date().optional(),
+  dateMax: z.date().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -40,8 +40,8 @@ export const CreateProductService = () => {
       weight: "0",
       value: value,
       textDescription: "",
-      dateMin: new Date(),
-      dateMax: new Date(),
+      dateMin: undefined,
+      dateMax: undefined,
     },
   });
 

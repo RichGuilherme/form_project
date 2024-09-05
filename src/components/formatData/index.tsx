@@ -7,8 +7,8 @@ interface FormDataProps {
   volume: string,
   value: string,
   textDescription: string
-  dateMin: Date
-  dateMax: Date
+  dateMin?: Date | string
+  dateMax?: Date | string
 }
 
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
@@ -20,7 +20,10 @@ const moneyFormatter = Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 2,
 });
 
-const formatDate = (date: Date) => {
+const formatDate = (date: Date | string) => {
+  if (typeof date === "string") {
+    return "";
+  }
   return format(date, "PPP");
 };
 
@@ -31,6 +34,7 @@ export const formatData = (data: FormDataProps) => {
   const volumeClean = data.volume.replace("uni", "").trim();
   const valueClean = data.value.replace("R$", "");
 
+  console.log(data);
 
   return {
     quantity: quantityClean,
@@ -39,7 +43,7 @@ export const formatData = (data: FormDataProps) => {
     volume: `${volumeClean} uni`,
     value: `${moneyFormatter.format(parseFloat(valueClean))}`,
     textDescription: data.textDescription,
-    dateMin: formatDate(data.dateMin),
-    dateMax: formatDate(data.dateMax)
+    dateMin: formatDate(data.dateMin || ""),
+    dateMax: formatDate(data.dateMax || "")
   };
 };
