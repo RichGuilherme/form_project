@@ -1,4 +1,4 @@
-import { Product, TableState } from "@/storage/storeValue";
+import { Product, TableState } from "@/type/store";
 
 
 const useCalculateTotals = (data: Product[], moneyValues: TableState["moneyValues"]) => {
