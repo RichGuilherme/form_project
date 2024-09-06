@@ -1,15 +1,15 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { TitleBox } from "../../titleBox";
 import InputForm from "../InputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../../ui/button";
-import { useCallback, useEffect } from "react";
-import useProductService from "@/storage/productService";
 import { Plus } from "lucide-react";
-import { formatDate } from "../../formatDate";
 import useStoreValue from "@/storage/storeValue";
 import { v4 as uuidV4 } from "uuid";
+import { useCallback } from "react";
+import { formatDate } from "@/components/formatDate";
+import useProductService from "@/storage/productService";
 
 const schema = z.object({
   quantity: z.string(),
@@ -51,7 +51,7 @@ const inputFormValue = [
   },
   {
     index: uuidV4(),
-    type: "money",
+    type: "valueTotal",
     name: "value",
     textLabel: "Valor"
   },
@@ -77,65 +77,24 @@ const inputFormValue = [
 ];
 
 export const CreateProductService = () => {
-  const {
-    status: { value },
-    setValueTotal
-  } = useProductService();
+  useProductService(state => state.setValueTotal);
 
   const addData = useStoreValue(state => state.addData);
 
-  const { control, handleSubmit, watch, setValue, reset } = useForm<FormData>({
+  const methods = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       quantity: "0",
       valueUnit: "0.00",
       volume: "0",
       weight: "0",
-      value: value,
+      value: "0",
       textDescription: "",
       dateMin: undefined,
       dateMax: undefined,
     },
   });
 
-  const watchValueUnit = watch("valueUnit");
-  const watchQuantity = watch("quantity");
-
-  const formatData = useCallback(() => {
-    const quantityStr = watchQuantity.replace(" uni", "").trim();
-    const valueUnitStr = watchValueUnit
-      .replace("R$ ", "")
-      .replace(/\./g, "")
-      .replace(",", ".")
-      .trim();
-
-    const uniFormat = parseFloat(quantityStr);
-    const moneyFormat = parseFloat(valueUnitStr);
-
-    return {
-      uniFormat,
-      moneyFormat
-    };
-  }, [watchQuantity, watchValueUnit]);
-
-  useEffect(() => {
-    const { uniFormat, moneyFormat } = formatData();
-
-    if (!isNaN(uniFormat) && !isNaN(moneyFormat)) {
-      if (moneyFormat === 0 || uniFormat === 0) {
-        setValueTotal("0,00");
-
-      } else if (moneyFormat > 0) {
-        const totalValue = moneyFormat * uniFormat;
-        setValueTotal(totalValue.toFixed(2));
-      }
-    }
-
-  }, [formatData, setValueTotal, watchQuantity, watchValueUnit]);
-
-  useEffect(() => {
-    setValue("value", value);
-  }, [setValue, value]);
 
   const onSubmit: SubmitHandler<FormData> = useCallback((dataProps) => {
     const formattedData = formatDate(dataProps);
@@ -146,45 +105,45 @@ export const CreateProductService = () => {
       id: uuidV4(),
     });
 
-    reset({
+    methods.reset({
       quantity: "0",
       valueUnit: "0.00",
       weight: "0",
       volume: "0",
-      value: value,
+      value: "",
       textDescription: "",
       dateMin: undefined,
       dateMax: undefined,
     });
-  }, [addData, reset, value]);
-
+  }, [addData, methods]);
 
   return (
     <section>
       <TitleBox title="Descrição do Produto/Serviço" />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
-        {inputFormValue.map(value => {
-          return (
-            <InputForm
-              key={value.index}
-              type={value.type}
-              textLabel={value.textLabel}
-              control={control}
-              name={value.name}
-              style={value.style} />
-          );
-        }
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
+          {inputFormValue.map(value => {
+            return (
+              <InputForm
+                key={value.index}
+                type={value.type}
+                textLabel={value.textLabel}
+                name={value.name}
+              />
+            );
+          }
+          )}
 
-        )}
-        <Button
-          className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"
-          type="submit"
-          size="icon"
-          variant="outline">
-          <Plus className="text-white group-hover:text-black" />
-        </Button>
-      </form>
+          <Button
+            className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"
+            type="submit"
+            size="icon"
+            variant="outline">
+            <Plus className="text-white group-hover:text-black" />
+          </Button>
+        </form>
+      </FormProvider >
     </section>
   );
 };

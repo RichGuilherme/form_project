@@ -1,13 +1,14 @@
+import { InputsProps } from "@/components/type/inputForm";
+import { Label } from "@/components/ui/label";
+import useUpdateTotalValue from "@/hook/createValue";
+import { Controller, useFormContext } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 
-import { Controller, useFormContext } from "react-hook-form";
-import { Label } from "@/components/ui/label";
-import { InputsProps } from "../../../type/inputForm";
 
-
-export const MoneyInput = ({ name, textLabel }: InputsProps) => {
+const ValueTotalInput = ({ name, textLabel }: InputsProps) => {
   const { control } = useFormContext();
 
+  useUpdateTotalValue();
 
   return (
     <div className="mt-3 group">
@@ -37,3 +38,5 @@ export const MoneyInput = ({ name, textLabel }: InputsProps) => {
     </div>
   );
 };
+
+export default ValueTotalInput;
