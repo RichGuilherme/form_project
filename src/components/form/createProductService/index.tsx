@@ -7,7 +7,7 @@ import { Button } from "../../ui/button";
 import { useCallback, useEffect } from "react";
 import useProductService from "@/storage/productService";
 import { Plus } from "lucide-react";
-import { formatData } from "../../formatData";
+import { formatDate } from "../../formatDate";
 import useStoreValue from "@/storage/storeValue";
 import { v4 as uuidV4 } from "uuid";
 
@@ -101,8 +101,7 @@ export const CreateProductService = () => {
   const watchValueUnit = watch("valueUnit");
   const watchQuantity = watch("quantity");
 
-
-  useEffect(() => {
+  const formatData = useCallback(() => {
     const quantityStr = watchQuantity.replace(" uni", "").trim();
     const valueUnitStr = watchValueUnit
       .replace("R$ ", "")
@@ -112,6 +111,15 @@ export const CreateProductService = () => {
 
     const uniFormat = parseFloat(quantityStr);
     const moneyFormat = parseFloat(valueUnitStr);
+
+    return {
+      uniFormat,
+      moneyFormat
+    };
+  }, [watchQuantity, watchValueUnit]);
+
+  useEffect(() => {
+    const { uniFormat, moneyFormat } = formatData();
 
     if (!isNaN(uniFormat) && !isNaN(moneyFormat)) {
       if (moneyFormat === 0 || uniFormat === 0) {
@@ -123,14 +131,14 @@ export const CreateProductService = () => {
       }
     }
 
-  }, [setValueTotal, watchQuantity, watchValueUnit]);
+  }, [formatData, setValueTotal, watchQuantity, watchValueUnit]);
 
   useEffect(() => {
     setValue("value", value);
   }, [setValue, value]);
 
   const onSubmit: SubmitHandler<FormData> = useCallback((dataProps) => {
-    const formattedData = formatData(dataProps);
+    const formattedData = formatDate(dataProps);
     useProductService.getState().setStatus(formattedData);
 
     addData({

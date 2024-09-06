@@ -10,14 +10,14 @@ const moneyFormatter = Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 2,
 });
 
-const formatDate = (date: Date | string) => {
+const formatDateString = (date: Date | string) => {
   if (typeof date === "string") {
     return "";
   }
   return format(date, "PPP");
 };
 
-export const formatData = (data: FormDataProps) => {
+export const formatDate = (data: FormDataProps) => {
   const quantityClean = data.quantity.replace("uni", "").trim();
   const valueUnitClean = data.valueUnit.replace("R$", "");
   const weightClean = data.weight.replace("kg", "").trim();
@@ -32,7 +32,7 @@ export const formatData = (data: FormDataProps) => {
     volume: `${volumeClean} uni`,
     value: `${moneyFormatter.format(parseFloat(valueClean))}`,
     textDescription: data.textDescription,
-    dateMin: formatDate(data.dateMin || ""),
-    dateMax: formatDate(data.dateMax || "")
+    dateMin: formatDateString(data.dateMin || ""),
+    dateMax: formatDateString(data.dateMax || "")
   };
 };
