@@ -4,7 +4,7 @@ import InputForm from "../InputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../../ui/button";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import useProductService from "@/storage/productService";
 import { Plus } from "lucide-react";
 import { formatData } from "../../formatData";
@@ -129,7 +129,7 @@ export const CreateProductService = () => {
     setValue("value", value);
   }, [setValue, value]);
 
-  const onSubmit: SubmitHandler<FormData> = (dataProps) => {
+  const onSubmit: SubmitHandler<FormData> = useCallback((dataProps) => {
     const formattedData = formatData(dataProps);
     useProductService.getState().setStatus(formattedData);
 
@@ -148,7 +148,7 @@ export const CreateProductService = () => {
       dateMin: undefined,
       dateMax: undefined,
     });
-  };
+  }, [addData, reset, value]);
 
 
   return (
