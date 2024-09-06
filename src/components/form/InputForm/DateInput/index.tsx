@@ -1,6 +1,6 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Controller } from "react-hook-form";
-import { InputsProps } from "../type/input";
+import { InputsProps } from "../../../type/inputForm";
 import {
   Popover,
   PopoverContent,

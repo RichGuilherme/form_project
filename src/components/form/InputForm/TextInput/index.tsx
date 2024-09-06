@@ -1,6 +1,6 @@
 import { Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { InputsProps } from "../type/input";
+import { InputsProps } from "../../../type/inputForm";
 
 
 export const TextInput = ({ name, textLabel, control, style }: InputsProps) => {

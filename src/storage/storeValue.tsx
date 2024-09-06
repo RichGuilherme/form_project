@@ -1,38 +1,6 @@
 import useCalculateTotals from "@/hook/calculateTotals";
+import { TableStore } from "@/type/store";
 import { create } from "zustand";
-
-export interface Product {
-  id: string;
-  quantity: string;
-  valueUnit: string;
-  volume: string;
-  weight: string;
-  value: string;
-  textDescription?: string;
-  dateMin?: string;
-  dateMax?: string;
-}
-
-export interface TableState {
-  data: Product[];
-
-  moneyValues: {
-    frete: string;
-    descont: string;
-    totalProductService: string;
-    totalNota: string;
-    kg: string;
-    unit: string;
-  };
-}
-
-interface TableActions {
-  addData: (newData: Product) => void;
-  removeData: (id: string) => void;
-  setMoneyValue: (name: string, value: string) => void;
-}
-
-type TableStore = TableState & TableActions;
 
 
 const useStoreValue = create<TableStore>((set) => ({

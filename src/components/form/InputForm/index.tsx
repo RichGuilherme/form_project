@@ -2,7 +2,7 @@ import { DateInput } from "./DateInput";
 import { KgInput } from "./KgInput";
 import { MoneyInput } from "./MoneyInput";
 import { TextInput } from "./TextInput";
-import { InputFormProps } from "./type/input";
+import { InputFormProps } from "../../type/inputForm";
 import { UniInput } from "./UnitInput";
 
 

@@ -1,6 +1,6 @@
 import "./App.css";
 import { FormComponents } from "./components/form";
-import ComponentTable from "./components/payloads";
+import ComponentTable from "./components/table";
 
 
 function App() {

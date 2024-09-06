@@ -1,15 +1,5 @@
 import { format } from "date-fns/format";
-
-interface FormDataProps {
-  quantity: string,
-  valueUnit: string,
-  weight: string,
-  volume: string,
-  value: string,
-  textDescription: string
-  dateMin?: Date | string
-  dateMax?: Date | string
-}
+import { FormDataProps } from "../type/formatDate";
 
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
   currency: "BRL",

@@ -1,24 +1,6 @@
+import { ProductServiceStore, Status } from "@/type/store";
 import { create } from "zustand";
 
-interface Status {
-  quantity: string;
-  valueUnit: string;
-  volume: string;
-  weight: string;
-  value: string;
-}
-
-
-interface ProductServiceActions {
-  setValueTotal: (value: string) => void;
-  setStatus: (status: Status) => void;
-}
-
-interface ProductServiceState {
-  status: Status;
-}
-
-type ProductServiceStore = ProductServiceState & ProductServiceActions;
 
 const useProductService = create<ProductServiceStore>((set) => ({
   status: {
