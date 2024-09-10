@@ -1,14 +1,16 @@
 
 import { NumericFormat } from "react-number-format";
 
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { FieldParams, InputsProps } from "../../../type/inputForm";
 
-export const UniInput = ({ name, textLabel, control }: InputsProps) => {
-  const handleBlur = (field: FieldParams) => () => {
-    if (field.value === "" || field.value === "0 uni") {
-      field.onChange("0");
+export const UniInput = ({ name, textLabel }: InputsProps) => {
+  const { control } = useFormContext();
+
+  const handleBlur = ({ value, onChange }: FieldParams) => {
+    if (value === "" || value === "0.00") {
+      onChange("0");
     }
   };
 
@@ -18,26 +20,20 @@ export const UniInput = ({ name, textLabel, control }: InputsProps) => {
         {textLabel}
       </Label>
 
-
       <div className="inputForm">
         <Controller
           name={name}
           control={control}
-          render={({ field: { ref, ...field } }) => (
+          render={({ field: { ref, onChange, value } }) => (
             <>
               <NumericFormat
-                {...field}
                 className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full peer"
                 suffix=" uni"
                 allowNegative={false}
                 getInputRef={ref}
-                onValueChange={(values) => {
-
-                  field.onChange(values.value || "0");
-                }}
-                onBlur={handleBlur(field)}
-                value={field.value}
-              />
+                onChange={onChange}
+                onBlur={() => handleBlur({ value, onChange })}
+                value={value} />
             </>
           )}
         />

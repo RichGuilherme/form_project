@@ -4,7 +4,6 @@ import { Noop } from "react-hook-form";
 export interface InputsProps {
     name: string;
     textLabel: string;
-    control: any;
     style?: string
 }
 
@@ -22,7 +21,6 @@ export type typeInput = "money" | "uni" | "kg" | "text"
 export interface InputFormProps {
     type: typeInput | string
     textLabel: string
-    control: any
     name: string
     style?: string
 }

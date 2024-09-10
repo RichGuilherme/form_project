@@ -1,5 +1,5 @@
 import { Calendar } from "@/components/ui/calendar";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { InputsProps } from "../../../type/inputForm";
 import {
   Popover,
@@ -12,7 +12,9 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 
 
-export const DateInput = ({ name, control, textLabel }: InputsProps) => {
+export const DateInput = ({ name, textLabel }: InputsProps) => {
+  const { control } = useFormContext();
+
   return (
     <div className="mt-3 group">
       <div className="inputForm">

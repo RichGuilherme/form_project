@@ -1,15 +1,16 @@
 import { NumericFormat } from "react-number-format";
 
-import { Controller, } from "react-hook-form";
+import { Controller, useFormContext, } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { FieldParams, InputsProps } from "../../../type/inputForm";
 
 
-export const KgInput = ({ name, textLabel, control }: InputsProps) => {
+export const KgInput = ({ name, textLabel }: InputsProps) => {
+  const { control } = useFormContext();
 
   const handleBlur = (field: FieldParams) => () => {
-    if (field.value === "" || field.value === "0,00 kg") {
-      field.onChange("0,00");
+    if (field.value === "" || field.value === "0.00 kg") {
+      field.onChange("0.00");
     }
   };
 
@@ -35,7 +36,7 @@ export const KgInput = ({ name, textLabel, control }: InputsProps) => {
                 allowNegative={false}
                 getInputRef={ref}
                 onValueChange={(values) => {
-                  const value = values.value || "0,00";
+                  const value = values.value || "0.00";
                   field.onChange(value);
                 }}
                 onBlur={handleBlur(field)}

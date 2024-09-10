@@ -1,11 +1,13 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import InputForm from "../InputForm";
 import { TitleBox } from "../../titleBox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useStoreValue from "@/storage/storeValue";
-import { useCallback, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { v4 as uuaiV4 } from "uuid";
+import { useShallow } from "zustand/react/shallow";
+import TotalNotaControlle from "../InputForm/TotalNotaControlle";
 
 const schema = z.object({
   descont: z.string(),
@@ -72,54 +74,45 @@ const inputFormValue = [
 ];
 
 export const MoreInfor = () => {
-  const { moneyValues, setMoneyValue } = useStoreValue(state => ({
+  const { moneyValues } = useStoreValue(useShallow(state => ({
     moneyValues: state.moneyValues,
-    setMoneyValue: state.setMoneyValue,
-  }));
+  })));
 
-  const { control, setValue, watch } = useForm<FormData>({
+  const methods = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: moneyValues,
+    defaultValues: useMemo(() => moneyValues, [moneyValues]),
   });
 
-  const watchFrete = watch("frete");
-  const watchDescont = watch("descont");
-
-  const updateMoneyValue = useCallback((field: keyof FormData, value: string) => {
-    if (value !== "0,00" && value !== "") {
-      setMoneyValue(field, value);
-    }
-  }, [setMoneyValue]);
-
-  useEffect(() => {
-    updateMoneyValue("frete", watchFrete);
-    updateMoneyValue("descont", watchDescont);
-  }, [watchFrete, watchDescont, updateMoneyValue]);
 
   useEffect(() => {
     Object.keys(moneyValues).forEach((key) => {
-      setValue(key as keyof FormData, moneyValues[key as keyof typeof moneyValues]);
+      methods.setValue(key as keyof FormData, moneyValues[key as keyof typeof moneyValues]);
     });
-  }, [moneyValues, setValue]);
+  }, [methods, moneyValues]);
 
 
+  const inputFormComponents = useMemo(() =>
+    inputFormValue.map((value) => (
+      <InputForm
+        key={value.index}
+        type={value.type}
+        textLabel={value.textLabel}
+        name={value.name}
+        style={value.style}
+      />
+    )), []
+  );
 
   return (
     <section>
       <TitleBox title="Mais informações" />
 
-      <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
-        {inputFormValue.map((value) => (
-          <InputForm
-            key={value.index}
-            type={value.type}
-            textLabel={value.textLabel}
-            control={control}
-            name={value.name}
-            style={value.style}
-          />
-        ))}
-      </form>
+      <FormProvider {...methods}>
+        <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
+          {inputFormComponents}
+          <TotalNotaControlle />
+        </form>
+      </FormProvider>
     </section>
   );
 };
