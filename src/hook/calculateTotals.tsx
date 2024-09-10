@@ -2,39 +2,42 @@ import { Product } from "@/type";
 
 
 const useCalculateTotals = (data: Product[]) => {
-  let totalProductService = 0;
-  let totalKg = 0;
-  let totalVolume = 0;
-  let totalNotaValue = 0;
+  const totals = data.reduce(
+    (acc, product) => {
+      const weight = parseFloat(product.weight.replace(",", "."));
+      const volume = parseFloat(product.volume);
 
+      const valueString = product.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
+      const value = parseFloat(valueString);
 
-  data.forEach((product) => {
-    const weight = parseFloat(product.weight.replace(",", "."));
-    const volume = parseFloat(product.volume);
+      if (!isNaN(value)) {
+        acc.totalProductService += value;
+        acc.totalNotaValue += value;
+      }
 
-    const valueString = product.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
-    const value = parseFloat(valueString);
+      if (!isNaN(weight)) {
+        acc.totalKg += weight;
+      }
 
+      if (!isNaN(volume)) {
+        acc.totalVolume += volume;
+      }
 
-    if (!isNaN(value)) {
-      totalProductService += value;
-      totalNotaValue += value;
+      return acc;
+    },
+    {
+      totalProductService: 0,
+      totalKg: 0,
+      totalVolume: 0,
+      totalNotaValue: 0,
     }
-
-    if (!isNaN(weight)) {
-      totalKg += weight;
-    }
-
-    if (!isNaN(volume)) {
-      totalVolume += volume;
-    }
-  });
+  );
 
   return {
-    totalProductService: totalProductService.toFixed(2),
-    totalNota: totalNotaValue.toFixed(2),
-    kg: totalKg.toFixed(2),
-    unit: totalVolume.toFixed(0),
+    totalProductService: totals.totalProductService.toFixed(2),
+    totalNota: totals.totalNotaValue.toFixed(2),
+    kg: totals.totalKg.toFixed(2),
+    unit: totals.totalVolume.toFixed(0),
   };
 };
 
