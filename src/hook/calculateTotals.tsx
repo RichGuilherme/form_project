@@ -1,4 +1,4 @@
-import { Product } from "@/storage/type/store";
+import { Product } from "@/type";
 
 
 const useCalculateTotals = (data: Product[]) => {

@@ -1,5 +1,5 @@
+import { TitleFormProp } from "@/type";
 import { memo } from "react";
-import { TitleFormProp } from "../type/titleForm";
 
 export const TitleBox = memo(({ title }: TitleFormProp) => {
   return (

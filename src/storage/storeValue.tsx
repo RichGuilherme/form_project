@@ -1,7 +1,7 @@
 import useCalculateTotals from "@/hook/calculateTotals";
-import { TableStore } from "@/storage/type/store";
-import { create } from "zustand";
+import { TableStore } from "@/type";
 
+import { create } from "zustand";
 
 const useStoreValue = create<TableStore>((set) => ({
   data: [],

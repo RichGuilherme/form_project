@@ -1,17 +1,8 @@
 
+import { FormData } from "@/type";
 import { useCallback, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-interface FormData {
-  quantity: string;
-  valueUnit: string;
-  weight: string;
-  volume: string;
-  value: string;
-  textDescription: string;
-  dateMin?: Date;
-  dateMax?: Date;
-}
 
 const useUpdateTotalValue = () => {
   const { setValue } = useFormContext<FormData>();

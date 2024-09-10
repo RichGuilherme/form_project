@@ -1,4 +1,5 @@
-import { ProductServiceStore, Status } from "@/storage/type/store";
+
+import { ProductServiceStore, Status } from "@/type";
 import { create } from "zustand";
 
 

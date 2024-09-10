@@ -1,5 +1,5 @@
+import { FormDataProps } from "@/type";
 import { format } from "date-fns/format";
-import { FormDataProps } from "../type/formatDate";
 
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
   currency: "BRL",

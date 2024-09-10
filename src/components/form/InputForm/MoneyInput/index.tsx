@@ -1,8 +1,7 @@
 import { NumericFormat } from "react-number-format";
-
 import { Controller, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { FieldParams, InputsProps } from "../../../type/inputForm";
+import { FieldParams, InputsProps } from "@/type";
 
 
 export const MoneyInput = ({ name, textLabel }: InputsProps) => {

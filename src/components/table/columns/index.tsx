@@ -1,7 +1,7 @@
 import useStoreValue from "@/storage/storeValue";
+import { Payment } from "@/type";
 import { ColumnDef } from "@tanstack/react-table";
 import { X } from "lucide-react";
-import { Payment } from "../type/table";
 
 
 export const columns: ColumnDef<Payment>[] = [

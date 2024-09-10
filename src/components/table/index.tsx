@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { columns } from "./columns";
 
 import useStoreValue from "@/storage/storeValue";
-import { Payment } from "./type/table";
 import { DataTable } from "./dataTable";
+import { Payment } from "@/type";
 
 
 export default function ComponentTable() {

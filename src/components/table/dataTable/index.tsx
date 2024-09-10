@@ -1,3 +1,4 @@
+import { DataTableProps } from "@/type";
 import {
   Table,
   TableBody,
@@ -12,7 +13,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { DataTableProps } from "../type/table";
 
 
 export function DataTable<TData, TValue>({
