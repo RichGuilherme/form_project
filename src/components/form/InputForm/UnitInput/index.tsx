@@ -3,23 +3,22 @@ import { NumericFormat } from "react-number-format";
 
 import { Controller, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { InputsProps } from "../../../type/inputForm";
+import { FieldParams, InputsProps } from "../../../type/inputForm";
 
 export const UniInput = ({ name, textLabel }: InputsProps) => {
   const { control } = useFormContext();
 
-  // const handleBlur = (field: FieldParams) => () => {
-  //   if (field.value === "" || field.value === "0 uni") {
-  //     field.onChange("0");
-  //   }
-  // };
+  const handleBlur = ({ value, onChange }: FieldParams) => {
+    if (value === "" || value === "0.00") {
+      onChange("0");
+    }
+  };
 
   return (
     <div className="mt-3 group">
       <Label htmlFor={name} className="font-thin text-gray-500 text-base group-focus-within:text-orange-500 ">
         {textLabel}
       </Label>
-
 
       <div className="inputForm">
         <Controller
@@ -33,8 +32,8 @@ export const UniInput = ({ name, textLabel }: InputsProps) => {
                 allowNegative={false}
                 getInputRef={ref}
                 onChange={onChange}
-                defaultValue=" 0 "
-                value={value || " 0 "} />
+                onBlur={() => handleBlur({ value, onChange })}
+                value={value} />
             </>
           )}
         />

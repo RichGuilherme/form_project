@@ -9,8 +9,8 @@ export const KgInput = ({ name, textLabel }: InputsProps) => {
   const { control } = useFormContext();
 
   const handleBlur = (field: FieldParams) => () => {
-    if (field.value === "" || field.value === "0,00 kg") {
-      field.onChange("0,00");
+    if (field.value === "" || field.value === "0.00 kg") {
+      field.onChange("0.00");
     }
   };
 
@@ -36,7 +36,7 @@ export const KgInput = ({ name, textLabel }: InputsProps) => {
                 allowNegative={false}
                 getInputRef={ref}
                 onValueChange={(values) => {
-                  const value = values.value || "0,00";
+                  const value = values.value || "0.00";
                   field.onChange(value);
                 }}
                 onBlur={handleBlur(field)}

@@ -1,23 +1,12 @@
-
 import { useCallback, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-interface FormData {
-  quantity: string;
-  valueUnit: string;
-  weight: string;
-  volume: string;
-  value: string;
-  textDescription: string;
-  dateMin?: Date;
-  dateMax?: Date;
-}
 
-const useUpdateTotalValue = () => {
-  const { setValue } = useFormContext<FormData>();
+const ValueTotalControlle = () => {
+  const { setValue } = useFormContext();
 
-  const watchValueUnit = useWatch({ name: "valueUnit" });
-  const watchQuantity = useWatch({ name: "quantity" });
+  const watchValueUnit = useWatch({ name: "valueUnit" }) || "0.00";
+  const watchQuantity = useWatch({ name: "quantity" }) || "0";
 
   const calculateTotalValue = useCallback(() => {
     const quantityStr = watchQuantity.replace(" uni", "").trim();
@@ -43,6 +32,8 @@ const useUpdateTotalValue = () => {
       calculateTotalValue();
     }
   }, [watchValueUnit, watchQuantity, calculateTotalValue]);
+
+  return null;
 };
 
-export default useUpdateTotalValue;
+export default ValueTotalControlle;

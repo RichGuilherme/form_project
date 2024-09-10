@@ -10,6 +10,8 @@ import { v4 as uuidV4 } from "uuid";
 import { useCallback, useMemo } from "react";
 import { formatDate } from "@/components/formatDate";
 import useProductService from "@/storage/productService";
+import ValueTotalControlle from "../InputForm/ValueTotalControlle";
+
 
 const schema = z.object({
   quantity: z.string(),
@@ -51,7 +53,7 @@ const inputFormValue = [
   },
   {
     index: uuidV4(),
-    type: "valueTotal",
+    type: "money",
     name: "value",
     textLabel: "Valor"
   },
@@ -111,7 +113,7 @@ export const CreateProductService = () => {
       valueUnit: "0.00",
       weight: "0",
       volume: "0",
-      value: "",
+      value: "0.00",
       textDescription: "",
       dateMin: undefined,
       dateMax: undefined,
@@ -136,7 +138,9 @@ export const CreateProductService = () => {
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
+
           {inputFormComponents}
+          <ValueTotalControlle />
 
           <Button
             className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"

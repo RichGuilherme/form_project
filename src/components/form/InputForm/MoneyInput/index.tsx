@@ -2,12 +2,17 @@ import { NumericFormat } from "react-number-format";
 
 import { Controller, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { InputsProps } from "../../../type/inputForm";
-
+import { FieldParams, InputsProps } from "../../../type/inputForm";
 
 
 export const MoneyInput = ({ name, textLabel }: InputsProps) => {
   const { control } = useFormContext();
+
+  const handleBlur = ({ value, onChange }: FieldParams) => {
+    if (value === "" || value === "0.00") {
+      onChange("0.00");
+    }
+  };
 
 
   return (
@@ -20,8 +25,9 @@ export const MoneyInput = ({ name, textLabel }: InputsProps) => {
         <Controller
           control={control}
           name={name}
-          render={({ field: { value, onChange, ref } }) => {
+          render={({ field: { value, onChange, ref, ...field } }) => {
             return <NumericFormat
+              {...field}
               thousandSeparator="."
               decimalSeparator=","
               className="border-none pl-0 focus-visible:ring-none focus-visible:outline-none outline-none text-xl font-thin w-full peer"
@@ -31,6 +37,7 @@ export const MoneyInput = ({ name, textLabel }: InputsProps) => {
               allowNegative={false}
               getInputRef={ref}
               onChange={onChange}
+              onBlur={() => handleBlur({ value, onChange })}
               value={value} />;
           }}
         />

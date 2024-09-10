@@ -1,12 +1,13 @@
-import { FormProvider, useForm, useFormContext, useWatch } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import InputForm from "../InputForm";
 import { TitleBox } from "../../titleBox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useStoreValue from "@/storage/storeValue";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { v4 as uuaiV4 } from "uuid";
 import { useShallow } from "zustand/react/shallow";
+import TotalNotaControlle from "../InputForm/TotalNotaControlle";
 
 const schema = z.object({
   descont: z.string(),
@@ -72,46 +73,6 @@ const inputFormValue = [
   },
 ];
 
-const MoneyValuesUpdater = () => {
-  const { setValue, getValues } = useFormContext();
-  const watchFrete = useWatch({ name: "frete" });
-  const watchDescont = useWatch({ name: "descont" });
-
-  const updateMoneyValue = useCallback(() => {
-    const totalProductService = getValues("totalProductService");
-    const descontValueStr = watchDescont
-      .replace("R$ ", "")
-      .replace(/\./g, "")
-      .replace(",", ".")
-      .trim();
-
-    const freteValueStr = watchFrete
-      .replace("R$ ", "")
-      .replace(/\./g, "")
-      .replace(",", ".")
-      .trim();
-
-    const freteFormat = parseFloat(freteValueStr);
-    const descontFormat = parseFloat(descontValueStr);
-
-    if (!isNaN(freteFormat) && !isNaN(descontFormat)) {
-      const totalNota = freteFormat + totalProductService - descontFormat;
-      setValue("totalNota", totalNota);
-    } else {
-      setValue("totalNota", "0,00");
-    }
-
-  }, [getValues, setValue, watchDescont, watchFrete]);
-
-  useEffect(() => {
-    if (watchFrete !== "0,00" || watchDescont !== "0,00") {
-      updateMoneyValue();
-    }
-  }, [watchFrete, watchDescont, updateMoneyValue]);
-
-  return null;
-};
-
 export const MoreInfor = () => {
   const { moneyValues } = useStoreValue(useShallow(state => ({
     moneyValues: state.moneyValues,
@@ -121,6 +82,14 @@ export const MoreInfor = () => {
     resolver: zodResolver(schema),
     defaultValues: useMemo(() => moneyValues, [moneyValues]),
   });
+
+
+  useEffect(() => {
+    Object.keys(moneyValues).forEach((key) => {
+      methods.setValue(key as keyof FormData, moneyValues[key as keyof typeof moneyValues]);
+    });
+  }, [methods, moneyValues]);
+
 
   const inputFormComponents = useMemo(() =>
     inputFormValue.map((value) => (
@@ -134,21 +103,14 @@ export const MoreInfor = () => {
     )), []
   );
 
-  useEffect(() => {
-    Object.keys(moneyValues).forEach((key) => {
-      methods.setValue(key as keyof FormData, moneyValues[key as keyof typeof moneyValues]);
-    });
-  }, [methods, moneyValues]);
-
-
   return (
     <section>
       <TitleBox title="Mais informações" />
 
       <FormProvider {...methods}>
         <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
-          <MoneyValuesUpdater />
           {inputFormComponents}
+          <TotalNotaControlle />
         </form>
       </FormProvider>
     </section>

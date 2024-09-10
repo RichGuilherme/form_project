@@ -6,11 +6,11 @@ import { create } from "zustand";
 const useStoreValue = create<TableStore>((set) => ({
   data: [],
   moneyValues: {
-    frete: "0,00",
-    descont: "0,00",
-    totalProductService: "0,00",
-    totalNota: "0,00",
-    kg: "0,00",
+    frete: "0.00",
+    descont: "0.00",
+    totalProductService: "0.00",
+    totalNota: "0.00",
+    kg: "0.00",
     unit: "0",
   },
 
@@ -32,7 +32,6 @@ const useStoreValue = create<TableStore>((set) => ({
         moneyValues: {
           ...state.moneyValues,
           ...updatedTotals,
-          // Preserve frete and descont
           frete: state.moneyValues.frete,
           descont: state.moneyValues.descont,
         },

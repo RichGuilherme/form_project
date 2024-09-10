@@ -28,8 +28,6 @@ const useCalculateTotals = (data: Product[]) => {
     if (!isNaN(volume)) {
       totalVolume += volume;
     }
-
-
   });
 
   return {
