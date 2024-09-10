@@ -1,5 +1,5 @@
 import useCalculateTotals from "@/hook/calculateTotals";
-import { TableStore } from "@/type/store";
+import { TableStore } from "@/storage/type/store";
 import { create } from "zustand";
 
 
@@ -15,32 +15,26 @@ const useStoreValue = create<TableStore>((set) => ({
   },
 
   setMoneyValue: (name, value) =>
-    set((state) => {
-      const updatedMoneyValues = {
+    set((state) => ({
+      moneyValues: {
         ...state.moneyValues,
         [name]: value,
-      };
-
-      const updatedTotals = useCalculateTotals(state.data, updatedMoneyValues);
-
-      return {
-        moneyValues: {
-          ...updatedMoneyValues,
-          ...updatedTotals,
-        },
-      };
-    }),
+      },
+    })),
 
   addData: (newData) =>
     set((state) => {
       const updatedData = [...state.data, newData];
-      const updatedTotals = useCalculateTotals(updatedData, state.moneyValues);
+      const updatedTotals = useCalculateTotals(updatedData);
 
       return {
         data: updatedData,
         moneyValues: {
           ...state.moneyValues,
           ...updatedTotals,
+          // Preserve frete and descont
+          frete: state.moneyValues.frete,
+          descont: state.moneyValues.descont,
         },
       };
     }),
@@ -48,7 +42,7 @@ const useStoreValue = create<TableStore>((set) => ({
   removeData: (id) =>
     set((state) => {
       const updatedData = state.data.filter((item) => item.id !== id);
-      const updatedTotals = useCalculateTotals(updatedData, state.moneyValues);
+      const updatedTotals = useCalculateTotals(updatedData);
 
       return {
         data: updatedData,

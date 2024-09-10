@@ -1,5 +1,5 @@
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 interface FormData {
@@ -18,9 +18,6 @@ const useUpdateTotalValue = () => {
 
   const watchValueUnit = useWatch({ name: "valueUnit" });
   const watchQuantity = useWatch({ name: "quantity" });
-
-  const prevWatchValueUnit = useRef(watchValueUnit);
-  const prevWatchQuantity = useRef(watchQuantity);
 
   const calculateTotalValue = useCallback(() => {
     const quantityStr = watchQuantity.replace(" uni", "").trim();
@@ -42,14 +39,10 @@ const useUpdateTotalValue = () => {
   }, [watchValueUnit, watchQuantity, setValue]);
 
   useEffect(() => {
-    if (watchValueUnit !== prevWatchValueUnit.current || watchQuantity !== prevWatchQuantity.current) {
+    if (watchValueUnit !== "0,00" || watchQuantity !== "0") {
       calculateTotalValue();
-      prevWatchValueUnit.current = watchValueUnit;
-      prevWatchQuantity.current = watchQuantity;
     }
   }, [watchValueUnit, watchQuantity, calculateTotalValue]);
-
-  return null;
 };
 
 export default useUpdateTotalValue;

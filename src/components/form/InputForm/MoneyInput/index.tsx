@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { InputsProps } from "../../../type/inputForm";
 
 
+
 export const MoneyInput = ({ name, textLabel }: InputsProps) => {
   const { control } = useFormContext();
 

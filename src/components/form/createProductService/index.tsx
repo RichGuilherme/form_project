@@ -7,7 +7,7 @@ import { Button } from "../../ui/button";
 import { Plus } from "lucide-react";
 import useStoreValue from "@/storage/storeValue";
 import { v4 as uuidV4 } from "uuid";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { formatDate } from "@/components/formatDate";
 import useProductService from "@/storage/productService";
 
@@ -83,6 +83,7 @@ export const CreateProductService = () => {
 
   const methods = useForm<FormData>({
     resolver: zodResolver(schema),
+    mode: "onSubmit",
     defaultValues: {
       quantity: "0",
       valueUnit: "0.00",
@@ -117,23 +118,25 @@ export const CreateProductService = () => {
     });
   }, [addData, methods]);
 
+
+  const inputFormComponents = useMemo(() =>
+    inputFormValue.map((value) => (
+      <InputForm
+        key={value.index}
+        type={value.type}
+        textLabel={value.textLabel}
+        name={value.name}
+        style={value.style}
+      />
+    )), []);
+
   return (
     <section>
       <TitleBox title="Descrição do Produto/Serviço" />
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
-          {inputFormValue.map(value => {
-            return (
-              <InputForm
-                key={value.index}
-                type={value.type}
-                textLabel={value.textLabel}
-                name={value.name}
-              />
-            );
-          }
-          )}
+          {inputFormComponents}
 
           <Button
             className="w-9 h-9 flex items-center justify-center p-0 ml-4 rounded-full hover:bg-orange-600 bg-orange-400"

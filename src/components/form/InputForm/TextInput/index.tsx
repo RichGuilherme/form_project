@@ -1,9 +1,11 @@
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { InputsProps } from "../../../type/inputForm";
 
 
-export const TextInput = ({ name, textLabel, control, style }: InputsProps) => {
+export const TextInput = ({ name, textLabel, style }: InputsProps) => {
+  const { control } = useFormContext();
+
   return (
     <div className={`"mt-3 group ${style}`}>
       <div className="inputForm group-focus-within:border-orange-500">

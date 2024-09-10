@@ -33,8 +33,8 @@ export const UniInput = ({ name, textLabel }: InputsProps) => {
                 allowNegative={false}
                 getInputRef={ref}
                 onChange={onChange}
-                defaultValue="0,00"
-                value={value || "0,00"} />
+                defaultValue=" 0 "
+                value={value || " 0 "} />
             </>
           )}
         />
