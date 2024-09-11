@@ -5,8 +5,8 @@ import formatData from "@/utils/formatData";
 const useCalculateTotals = (data: Product[]) => {
   const totals = data.reduce(
     (acc, product) => {
-      const weight = parseFloat(formatData(product.weight, "weight"));
-      const volume = parseFloat(product.volume);
+      const _weight = parseFloat(formatData(product.weight, "weight"));
+      const _volume = parseFloat(product.volume);
       const _value = parseFloat(formatData(product.value, "money"));
 
       if (!isNaN(_value)) {
@@ -14,12 +14,12 @@ const useCalculateTotals = (data: Product[]) => {
         acc.totalNotaValue += _value;
       }
 
-      if (!isNaN(weight)) {
-        acc.totalKg += weight;
+      if (!isNaN(_weight)) {
+        acc.totalKg += _weight;
       }
 
-      if (!isNaN(volume)) {
-        acc.totalVolume += volume;
+      if (!isNaN(_volume)) {
+        acc.totalVolume += _volume;
       }
 
       return acc;

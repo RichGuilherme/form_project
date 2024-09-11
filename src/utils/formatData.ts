@@ -16,7 +16,7 @@ const formatData = (data: string | number, typeValue: "money" | "uni" | "weight"
       break;
 
     case "weight":
-      formatData = formatData.replace(" kg", "").trim();
+      formatData = formatData.replace(" kg", "").trim().replace(",", ".");
       break;
   }
 
