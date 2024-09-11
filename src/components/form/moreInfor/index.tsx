@@ -104,11 +104,11 @@ export const MoreInfor = () => {
   );
 
   return (
-    <section>
+    <section className="sectionForm">
       <TitleBox title="Mais informações" />
 
       <FormProvider {...methods}>
-        <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 ">
+        <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 h-full">
           {inputFormComponents}
           <TotalNotaControlle />
         </form>

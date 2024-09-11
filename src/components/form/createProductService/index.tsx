@@ -134,11 +134,11 @@ export const CreateProductService = () => {
     )), []);
 
   return (
-    <section>
+    <section className="sectionForm">
       <TitleBox title="Descrição do Produto/Serviço" />
 
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center">
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-5 grid-rows-2 w-[65%] gap-6 items-center h-full">
 
           {inputFormComponents}
           <ValueTotalControlle />
