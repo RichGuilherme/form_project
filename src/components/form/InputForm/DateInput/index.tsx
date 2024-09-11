@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 
 export const DateInput = ({ name, textLabel }: InputsProps) => {
@@ -33,7 +34,7 @@ export const DateInput = ({ name, textLabel }: InputsProps) => {
                     )}
                   >
                     {field.value ? (
-                      format(field.value, "PPP")
+                      format(field.value, "dd/MM/yyyy", { locale: ptBR })
                     ) : (
                       <span className="text-xl">{textLabel}</span>
                     )}
