@@ -15,7 +15,7 @@ const ValueTotalControlle = () => {
 
     if (!isNaN(_quantity) && !isNaN(_valueUnit)) {
       const totalValue = _valueUnit * _quantity;
-      setValue("value", totalValue.toFixed(0));
+      setValue("value", totalValue.toFixed(2));
 
     } else {
       setValue("value", "0.00");
