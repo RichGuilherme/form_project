@@ -1,18 +1,17 @@
 import { Product } from "@/type";
+import formatData from "@/utils/formatData";
 
 
 const useCalculateTotals = (data: Product[]) => {
   const totals = data.reduce(
     (acc, product) => {
-      const weight = parseFloat(product.weight.replace(",", "."));
+      const weight = parseFloat(formatData(product.weight, "weight"));
       const volume = parseFloat(product.volume);
+      const _value = parseFloat(formatData(product.value, "money"));
 
-      const valueString = product.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
-      const value = parseFloat(valueString);
-
-      if (!isNaN(value)) {
-        acc.totalProductService += value;
-        acc.totalNotaValue += value;
+      if (!isNaN(_value)) {
+        acc.totalProductService += _value;
+        acc.totalNotaValue += _value;
       }
 
       if (!isNaN(weight)) {

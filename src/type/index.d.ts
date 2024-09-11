@@ -54,8 +54,8 @@ export interface ProductServiceState {
 export type ProductServiceStore = ProductServiceState & ProductServiceActions;
 
 
-// formatData
-export interface FormDataProps {
+// formatDate
+export interface FormDataCreateProps {
   quantity: string,
   valueUnit: string,
   weight: string,

@@ -8,9 +8,10 @@ import { Plus } from "lucide-react";
 import useStoreValue from "@/storage/storeValue";
 import { v4 as uuidV4 } from "uuid";
 import { useCallback, useMemo } from "react";
-import { formatDate } from "@/components/formatDate";
 import useProductService from "@/storage/productService";
 import ValueTotalControlle from "../InputForm/ValueTotalControlle";
+import formatDataCreate from "@/utils/formatDate";
+;
 
 
 const schema = z.object({
@@ -100,7 +101,7 @@ export const CreateProductService = () => {
 
 
   const onSubmit: SubmitHandler<FormData> = useCallback((dataProps) => {
-    const formattedData = formatDate(dataProps);
+    const formattedData = formatDataCreate(dataProps);
     useProductService.getState().setStatus(formattedData);
 
     addData({
