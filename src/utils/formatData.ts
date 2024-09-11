@@ -12,7 +12,7 @@ const formatData = (data: string | number, typeValue: "money" | "uni" | "weight"
       break;
 
     case "uni":
-      formatData = formatData.replace(" uni", "").trim();
+      formatData = formatData.replace(" uni", "").replace(/^(0+)(\d)/g, "$2").trim();
       break;
 
     case "weight":
