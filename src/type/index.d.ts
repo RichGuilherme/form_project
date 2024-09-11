@@ -68,12 +68,12 @@ export interface FormDataCreateProps {
 
 
 // inputForm
-
 import { Noop } from "react-hook-form";
 
 export interface InputsProps {
   name: string;
-  textLabel: string;
+  textLabel?: string;
+  placeholder?: string;
   style?: string
 }
 
@@ -90,7 +90,8 @@ export type typeInput = "money" | "uni" | "kg" | "text"
 
 export interface InputFormProps {
   type: typeInput | string
-  textLabel: string
+  textLabel?: string
+  placeholder?: string
   name: string
   style?: string
 }

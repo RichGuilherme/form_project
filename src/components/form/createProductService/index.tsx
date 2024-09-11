@@ -62,7 +62,7 @@ const inputFormValue = [
     index: uuidV4(),
     type: "text",
     name: "textDescription",
-    textLabel: "Descrição",
+    placeholder: "Descrição",
     style: "col-span-2"
   },
   {
@@ -128,6 +128,7 @@ export const CreateProductService = () => {
         key={value.index}
         type={value.type}
         textLabel={value.textLabel}
+        placeholder={value.placeholder}
         name={value.name}
         style={value.style}
       />

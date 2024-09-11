@@ -61,14 +61,14 @@ const inputFormValue = [
     index: uuaiV4(),
     type: "text",
     name: "reference",
-    textLabel: "Pedido de referência",
+    placeholder: "Pedido de referência",
     style: "col-span-2 w-[70%] relative",
   },
   {
     index: uuaiV4(),
     type: "text",
     name: "obs",
-    textLabel: "Obs",
+    placeholder: "Obs",
     style: "col-span-2 w-[85%] relative right-[128px]",
   },
 ];
@@ -97,6 +97,7 @@ export const MoreInfor = () => {
         key={value.index}
         type={value.type}
         textLabel={value.textLabel}
+        placeholder={value.placeholder}
         name={value.name}
         style={value.style}
       />
@@ -108,7 +109,7 @@ export const MoreInfor = () => {
       <TitleBox title="Mais informações" />
 
       <FormProvider {...methods}>
-        <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 h-full">
+        <form className="grid grid-cols-6 grid-rows-2 w-4/5 gap-6 h-fu">
           {inputFormComponents}
           <TotalNotaControlle />
         </form>

@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { InputsProps } from "@/type";
 
 
-export const TextInput = ({ name, textLabel, style }: InputsProps) => {
+export const TextInput = ({ name, placeholder, style }: InputsProps) => {
   const { control } = useFormContext();
 
   return (
@@ -18,7 +18,7 @@ export const TextInput = ({ name, textLabel, style }: InputsProps) => {
                 {...field}
                 type="text"
                 className="border-none placeholder:text-xl text-xl pl-0 peer"
-                placeholder={textLabel}
+                placeholder={placeholder}
                 value={field.value}
               />
             </>
