@@ -20,6 +20,7 @@ const TotalNotaControlle = () => {
 
       } else {
         const totalNota = _frete + _totalProductService - _descont;
+        console.log(totalNota);
         setValue("totalNota", totalNota.toFixed(2));
       }
     }
@@ -27,9 +28,7 @@ const TotalNotaControlle = () => {
 
 
   useEffect(() => {
-    if (watchFrete !== "0.00" || watchDescont !== "0.00") {
-      updateMoneyValue();
-    }
+    updateMoneyValue();
   }, [watchFrete, watchDescont, updateMoneyValue]);
 
   return null;
