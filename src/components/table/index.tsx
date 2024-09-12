@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { columns } from "./columns";
 
 import useStoreValue from "@/storage/storeValue";
@@ -10,13 +10,7 @@ export default function ComponentTable() {
   const data = useStoreValue(state => state.data);
   const [loading, setLoading] = useState(true);
 
-  const dataTable = useMemo(() => {
-    return data as Payment[];
-
-  }, [data]);
-
   useEffect(() => {
-
     setLoading(false);
   }, [data]);
 
@@ -26,7 +20,7 @@ export default function ComponentTable() {
 
   return (
     <section className="py-10">
-      <DataTable columns={columns} data={dataTable} />
+      <DataTable columns={columns} data={data as Payment[]} />
     </section>
   );
 }

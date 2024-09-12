@@ -80,8 +80,6 @@ const inputFormValue = [
 ];
 
 export const CreateProductService = () => {
-  useProductService(state => state.setValueTotal);
-
   const addData = useStoreValue(state => state.addData);
 
   const methods = useForm<FormData>({
