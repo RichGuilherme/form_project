@@ -8,7 +8,7 @@ const formatData = (data: string | number, typeValue: "money" | "uni" | "weight"
 
   switch (typeValue) {
     case "money":
-      formatData = formatData.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
+      formatData = formatData.replace("R$", "").replace(/\.00$/, "").replace(",", ".").trim();
       break;
 
     case "uni":
